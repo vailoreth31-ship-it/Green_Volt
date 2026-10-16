@@ -2,82 +2,68 @@
 
 namespace App\Controllers;
 
-use App\Models\Vehiculo;
+use App\Controllers\BaseController;
 
 class CompradorController extends BaseController {
+    private $comprarModel;
+
+    public function __construct() {
+        $this->comprarModel = new \App\Models\Comprar();
+    }
 
     public function index() {
-        $vehiculos = (new Vehiculo())->getAll();
-        $seleccionado = isset($_GET['vehiculo']) ? (int) $_GET['vehiculo'] : 0;
+        $vehiculos = $this->comprarModel->obtenerVehiculos();
+        $vehiculoSeleccionado = filter_input(INPUT_GET, 'vehiculo', FILTER_VALIDATE_INT);
+        $vehiculoSeleccionado = $vehiculoSeleccionado !== false && $vehiculoSeleccionado !== null
+            ? $vehiculoSeleccionado
+            : 0;
+
+        if ($vehiculoSeleccionado > 0) {
+            $vehiculoEncontrado = false;
+            foreach ($vehiculos as $vehiculo) {
+                if ((int) $vehiculo['id'] === $vehiculoSeleccionado) {
+                    $vehiculoEncontrado = true;
+                    break;
+                }
+            }
+
+            if (!$vehiculoEncontrado) {
+                $vehiculoSeleccionado = 0;
+            }
+        }
 
         $this->render('comprador/index', [
-            'titulo' => 'Comprar un Vehículo',
+            'titulo' => 'Comprar Vehículos Eléctricos - Green Volt',
             'vehiculos' => $vehiculos,
-            'vehiculoSeleccionado' => $seleccionado,
-            'formulario' => []
+            'vehiculoSeleccionado' => $vehiculoSeleccionado,
+            'mensaje_exito' => ''
         ]);
     }
 
-    public function solicitar() {
+    public function procesar() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /green_volt/comprador');
             exit;
         }
 
-        $vehiculoId = filter_input(INPUT_POST, 'vehiculo_id', FILTER_VALIDATE_INT);
-        $nombre = trim($_POST['nombre'] ?? '');
-        $correo = trim($_POST['correo'] ?? '');
-        $telefono = trim($_POST['telefono'] ?? '');
-        $formulario = [
-            'nombre' => $nombre,
-            'correo' => $correo,
-            'telefono' => $telefono
-        ];
-        $errores = [];
-        $vehiculo = null;
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 
-        if ($vehiculoId) {
-            $vehiculo = (new Vehiculo())->getById($vehiculoId);
-        }
-
-        if (!$vehiculo || (isset($vehiculo['activo']) && (int) $vehiculo['activo'] !== 1)) {
-            $errores[] = 'Selecciona un vehículo disponible.';
-        }
-        if ($nombre === '') {
-            $errores[] = 'Indica tu nombre completo.';
-        }
-        if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-            $errores[] = 'Indica un correo electrónico válido.';
-        }
-        if ($telefono === '') {
-            $errores[] = 'Indica un teléfono de contacto.';
-        }
-
-        $vehiculos = (new Vehiculo())->getAll();
-        if ($errores) {
-            $this->render('comprador/index', [
-                'titulo' => 'Comprar un Vehículo',
-                'vehiculos' => $vehiculos,
-                'vehiculoSeleccionado' => (int) $vehiculoId,
-                'formulario' => $formulario,
-                'errores' => $errores
-            ]);
-            return;
-        }
-
-        $_SESSION['solicitud_compra'] = [
-            'nombre' => $nombre,
-            'correo' => $correo,
-            'telefono' => $telefono,
-            'vehiculo' => $vehiculo['nombre'] ?? $vehiculo['modelo'] ?? 'Vehículo eléctrico'
+        $datos = [
+            'usuario_id' => $_SESSION['user_id'] ?? null,
+            'nombre_cliente' => trim($_POST['nombre_cliente'] ?? ''),
+            'correo_cliente' => trim($_POST['correo_cliente'] ?? ''),
+            'telefono' => trim($_POST['telefono'] ?? ''),
+            'vehiculo_id' => trim($_POST['vehiculo_id'] ?? ''),
+            'tipo_pago' => trim($_POST['tipo_pago'] ?? ''),
+            'comentarios' => trim($_POST['comentarios'] ?? '')
         ];
 
-        $this->render('comprador/index', [
-            'titulo' => 'Comprar un Vehículo',
-            'vehiculos' => $vehiculos,
-            'vehiculoSeleccionado' => (int) $vehiculoId,
-            'formulario' => [],
-            'confirmacion' => $_SESSION['solicitud_compra']
-        ]);
+        if ($this->comprarModel->registrarSolicitudCompra($datos)) {
+            $_SESSION['comprar_message'] = '¡Tu solicitud de compra ha sido enviada con éxito! Un asesor de Green Volt te contactará muy pronto.';
+            header('Location: /green_volt/comprador');
+            exit;
+        }
+
+        die('Error al procesar la solicitud de compra.');
     }
 }

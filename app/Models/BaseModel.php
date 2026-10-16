@@ -8,6 +8,6 @@ abstract class BaseModel {
     protected $db;
 
     public function __construct() {
-        $this->db = Database::getConnection();
+        $this->db = Database::getInstance()->getConnection();
     }
 }

@@ -22,18 +22,9 @@ class VehiculosController extends BaseController {
         }
 
         // Carga directa de la vista enviando $vehiculos y $titulo de forma explicita
-        $datos = [
+        $this->render('vehiculos/index', [
             'titulo' => 'Catálogo de Vehículos Eléctricos',
             'vehiculos' => $vehiculos
-        ];
-
-        extract($datos);
-        
-        $rutaVista = __DIR__ . '/../Views/vehiculos/index.php';
-        if (file_exists($rutaVista)) {
-            require $rutaVista;
-        } else {
-            die("No se encontró el archivo de vista en: " . $rutaVista);
-        }
+        ]);
     }
 }

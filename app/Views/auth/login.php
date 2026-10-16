@@ -1,27 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - Green Volt</title>
-    <!-- Bootstrap CSS & FontAwesome -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-light">
-
-<!-- BARRA DE NAVEGACIÓN -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="/green_volt/">
-            <i class="fa-solid fa-bolt text-warning me-2"></i>Green Volt
-        </a>
-        <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="/green_volt/"><i class="fa-solid fa-house me-1"></i>Volver al Inicio</a>
-        </div>
-    </div>
-</nav>
-
 <!-- FORMULARIO DE LOGIN -->
 <div class="container my-5">
     <div class="row justify-content-center">
@@ -80,8 +56,3 @@
         </div>
     </div>
 </div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

@@ -20,12 +20,13 @@
 
         <div style="margin-bottom: 15px;">
             <label style="display: block; font-weight: bold; margin-bottom: 5px;">Contraseña:</label>
-            <input type="password" name="password" minlength="6" required style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;">
+            <input type="password" name="password" minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}" title="Usa al menos 8 caracteres, incluyendo una letra mayúscula, una minúscula y un número." autocomplete="new-password" required style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;">
+            <small style="display: block; margin-top: 5px; color: #555;">Debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.</small>
         </div>
 
         <div style="margin-bottom: 20px;">
             <label style="display: block; font-weight: bold; margin-bottom: 5px;">Confirmar Contraseña:</label>
-            <input type="password" name="confirm_password" minlength="6" required style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;">
+            <input type="password" name="confirm_password" minlength="8" autocomplete="new-password" required style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;">
         </div>
 
         <button type="submit" style="width: 100%; background-color: #198754; color: white; border: none; padding: 12px; font-size: 16px; border-radius: 4px; cursor: pointer;">

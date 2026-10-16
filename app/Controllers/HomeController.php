@@ -10,6 +10,6 @@ class HomeController extends BaseController {
         $this->render('home', [
             'titulo' => 'Bienvenido a Green Volt',
             'subtitulo' => 'La plataforma líder en venta y comparación de vehículos eléctricos.'
-        ], false);
+        ]);
     }
 }

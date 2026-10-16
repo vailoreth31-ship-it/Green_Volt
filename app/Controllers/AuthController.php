@@ -97,8 +97,8 @@ class AuthController extends BaseController {
                 exit;
             }
 
-            if (strlen($password) < 6) {
-                $_SESSION['auth_error'] = 'La contraseña debe tener al menos 6 caracteres.';
+            if (preg_match('/\A(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}\z/', $password) !== 1) {
+                $_SESSION['auth_error'] = 'La contraseña debe tener al menos 8 caracteres e incluir una letra mayúscula, una minúscula y un número.';
                 header('Location: /green_volt/auth/register');
                 exit;
             }
