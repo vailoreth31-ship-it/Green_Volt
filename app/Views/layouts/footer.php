@@ -1,6 +1,6 @@
     <footer class="footer">
         <div class="container">
-            <p class="mb-0">&copy; <?= date('Y') ?> Green Volt - Conecta tu energía con el planeta</p>
+            <p class="mb-0">&copy; <?= date('Y') ?> Green Volt - Conecta tu energía con el planeta. SENA CDM</p>
         </div>
     </footer>
     <div class="modal fade" id="tratamientoDatosModal" tabindex="-1" aria-labelledby="tratamientoDatosModalLabel" aria-hidden="true">
@@ -11,7 +11,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    El presente proyecto tiene fines exclusivamente académicos. Los datos utilizados durante el desarrollo, las pruebas y la demostración del sistema son ficticios y fueron creados únicamente con fines de simulación. El sistema no recolecta, almacena ni procesa datos personales reales de estudiantes, docentes o terceros.
+                    El presente proyecto tiene fines exclusivamente académicos. Los datos utilizados durante el desarrollo, las pruebas y la demostración del sistema son ficticios y fueron creados únicamente con fines de simulación. El sistema no recolecta, almacena ni procesa datos personales reales de estudiantes, docentes o terceros. 
                 </div>
             </div>
         </div>

@@ -12,11 +12,6 @@ class DashboardController extends BaseController {
     }
 
     public function index() {
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: /green_volt/auth/login');
-            exit;
-        }
-
         $metricas = $this->dashboardModel->obtenerMetricasGenerales();
         $ultimasCitas = $this->dashboardModel->obtenerUltimasCitas();
         $ultimosVehiculos = $this->dashboardModel->obtenerUltimosVehiculos();
